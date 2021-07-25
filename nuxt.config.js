@@ -61,15 +61,13 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
-    manifest: {
-      lang: "en"
-    },
     meta: {
       name: "Otra Vez",
       description: "Fashion friendly",
       theme_color: "#000000"
     },
     manifest: {
+      lang: "en",
       name: "OtraVez",
       short_name: "OV",
       theme_color: "#000000",
