@@ -63,6 +63,25 @@ export default {
   pwa: {
     manifest: {
       lang: "en"
+    },
+    meta: {
+      name: "Otra Vez",
+      description: "Fashion friendly",
+      theme_color: "#000000"
+    },
+    manifest: {
+      name: "OtraVez",
+      short_name: "OV",
+      theme_color: "#000000",
+      description: "Fashion friendly",
+      background_color: "#000000",
+      display: "standalone",
+      scope: "/",
+      start_url: "/"
+    },
+    workbox: {
+      /* workbox options */
+      offlineAnalytics: true
     }
   },
 
