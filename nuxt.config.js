@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "otra_vez",
+    title: "Otra Vez",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -48,7 +48,11 @@ export default {
           measurementId: process.env.MEASUREMENT_ID
         },
         services: {
-          firestore: true,
+          firestore: {
+            enablePersistence: {
+              synchronizeTabs: true
+            }
+          },
           storage: true,
           analytics: true
         }
