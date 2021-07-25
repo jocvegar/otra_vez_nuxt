@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -54,7 +56,12 @@ export default {
             }
           },
           storage: true,
-          analytics: true
+          analytics: true,
+          messaging: {
+            createServiceWorker: true,
+            fcmPublicVapidKey: process.env.FCM_PUBLIC_KEY,
+            inject: fs.readFileSync("./firebase-messaging-sw.js")
+          }
         }
       }
     ]
