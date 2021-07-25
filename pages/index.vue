@@ -13,9 +13,28 @@ export default {
       message: ""
     };
   },
+
   async mounted() {
     this.readFromFirestore();
-    this.listenTokenRefresh();
+    // this.listenTokenRefresh();
+
+    this.$fire.messaging
+      .requestPermission()
+      .then(() => {
+        console.log("Notification permission granted.");
+        return this.$fire.messaging.getToken();
+      })
+      .then(token => {
+        // You update this token for server by call api
+        console.log("The token is: ", token);
+      })
+      .catch(function(err) {
+        console.log("Unable to get permission to notify.", err);
+      });
+
+    this.$fire.messaging.onMessage(function(payload) {
+      console.log("Message received. ", payload);
+    });
   },
   methods: {
     async readFromFirestore() {
