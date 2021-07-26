@@ -13,7 +13,13 @@ export default {
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=UA-number-3",
+        async: true
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -56,11 +62,13 @@ export default {
             }
           },
           storage: true,
-          analytics: true,
+          analytics: {
+            collectionEnabled: true
+          },
           messaging: {
             createServiceWorker: true,
-            fcmPublicVapidKey: process.env.FCM_PUBLIC_KEY,
-            inject: fs.readFileSync("./firebase-messaging-sw.js")
+            fcmPublicVapidKey: process.env.FCM_PUBLIC_KEY
+            // inject: fs.readFileSync("./firebase-messaging-sw.js")
           }
         }
       }

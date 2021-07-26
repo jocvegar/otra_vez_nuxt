@@ -19,45 +19,18 @@ export default {
       alertMessage: "test"
     };
   },
-  async mounted() {
-    const currentToken = await this.$fire.messaging.getToken();
-    console.log(`currentToken`, currentToken);
+
+  mounted() {
     this.readFromFirestore();
+
+    this.listenTokenRefresh();
     this.$fire.messaging.onMessage(payload => {
       console.info("Message received: ", payload);
     });
-    this.$fire.messaging.onTokenRefresh(async () => {
-      const refreshToken = await this.$fire.messaging.getToken();
-      console.log("Token Refreshed", refreshToken);
-    });
   },
-  // async mounted() {
-  //   this.readFromFirestore();
-  //   this.listenTokenRefresh();
-  //   const _this = this;
-  //   this.$fire.messaging
-  //     .requestPermission()
-  //     .then(() => {
-  //       console.log("Notification permission granted.");
-  //       return this.$fire.messaging.getToken();
-  //     })
-  //     .then(token => {
-  //       // You update this token for server by call api
-  //       console.log("The token is: ", token);
-  //     })
-  //     .catch(function(err) {
-  //       console.log("Unable to get permission to notify.", err);
-  //     });
-
-  //   this.$fire.messaging.onMessage(function(payload) {
-  //     _this.showDismissibleAlert = true;
-  //     _this.alertMessage = "Message received";
-  //     console.log("Message received. ", payload);
-  //     alert("hola");
-  //   });
-  // },
   methods: {
     async readFromFirestore() {
+      console.log("I was called");
       const testRef = this.$fire.firestore
         .collection("test")
         .doc("GtDccyodR6KKKEcLBdna");
@@ -133,6 +106,16 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    async turnOnNotification() {
+      try {
+        await this.$fire.messaging.requestPermission();
+        const token = await this.$fire.messaging.getToken();
+        // send to server
+      } catch (err) {
+        if (err.code === "messaging/token-unsubscribe-failed")
+          turnOnNotification();
+      }
     }
   }
 };
