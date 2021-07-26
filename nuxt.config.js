@@ -73,7 +73,8 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     icon: {
-      fileName: "icon.png"
+      source: "@/static/pwa.png",
+      fileName: "pwa.png"
     },
     meta: {
       name: "Otra Vez",
