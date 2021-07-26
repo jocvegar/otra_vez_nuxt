@@ -13,7 +13,16 @@ export default {
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      {
+        src: "https://cdn.jsdelivr.net/npm/pwacompat@2.0.6/pwacompat.min.js",
+        integrity:
+          "sha384-GOaSLecPIMCJksN83HLuYf9FToOiQ2Df0+0ntv7ey8zjUHESXhthwvq9hXAZTifA",
+        crossorigin: "anonymous",
+        defer: true
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -72,10 +81,10 @@ export default {
   axios: {},
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
-    icon: {
-      source: "@/static/pwa.png",
-      fileName: "pwa.png"
-    },
+    // icon: {
+    //   source: "/static/pwa.png",
+    //   fileName: "pwa.png"
+    // },
     meta: {
       name: "Otra Vez",
       description: "Fashion friendly",
