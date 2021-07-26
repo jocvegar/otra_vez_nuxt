@@ -1,41 +1,61 @@
 <template>
-  <div>
+  <b-container>
+    <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+      {{ alertMessage }}
+    </b-alert>
+    {{ alertMessage }}
     <Tutorial :message="message" />
 
     <b-button variant="danger" @click="getMessagingToken">Button</b-button>
-  </div>
+  </b-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      message: ""
+      message: "",
+      showDismissibleAlert: false,
+      alertMessage: "test"
     };
   },
-
   async mounted() {
+    const currentToken = await this.$fire.messaging.getToken();
+    console.log(`currentToken`, currentToken);
     this.readFromFirestore();
-    // this.listenTokenRefresh();
-
-    this.$fire.messaging
-      .requestPermission()
-      .then(() => {
-        console.log("Notification permission granted.");
-        return this.$fire.messaging.getToken();
-      })
-      .then(token => {
-        // You update this token for server by call api
-        console.log("The token is: ", token);
-      })
-      .catch(function(err) {
-        console.log("Unable to get permission to notify.", err);
-      });
-
-    this.$fire.messaging.onMessage(function(payload) {
-      console.log("Message received. ", payload);
+    this.$fire.messaging.onMessage(payload => {
+      console.info("Message received: ", payload);
+    });
+    this.$fire.messaging.onTokenRefresh(async () => {
+      const refreshToken = await this.$fire.messaging.getToken();
+      console.log("Token Refreshed", refreshToken);
     });
   },
+  // async mounted() {
+  //   this.readFromFirestore();
+  //   this.listenTokenRefresh();
+  //   const _this = this;
+  //   this.$fire.messaging
+  //     .requestPermission()
+  //     .then(() => {
+  //       console.log("Notification permission granted.");
+  //       return this.$fire.messaging.getToken();
+  //     })
+  //     .then(token => {
+  //       // You update this token for server by call api
+  //       console.log("The token is: ", token);
+  //     })
+  //     .catch(function(err) {
+  //       console.log("Unable to get permission to notify.", err);
+  //     });
+
+  //   this.$fire.messaging.onMessage(function(payload) {
+  //     _this.showDismissibleAlert = true;
+  //     _this.alertMessage = "Message received";
+  //     console.log("Message received. ", payload);
+  //     alert("hola");
+  //   });
+  // },
   methods: {
     async readFromFirestore() {
       const testRef = this.$fire.firestore

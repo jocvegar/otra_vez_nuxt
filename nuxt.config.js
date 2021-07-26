@@ -59,17 +59,15 @@ export default {
           analytics: true,
           messaging: {
             createServiceWorker: true,
-            fcmPublicVapidKey: process.env.FCM_PUBLIC_KEY
-            // inject: fs.readFileSync("./firebase-messaging-sw.js")
+            fcmPublicVapidKey: process.env.FCM_PUBLIC_KEY,
+            inject: fs.readFileSync("./firebase-messaging-sw.js")
           }
         }
       }
     ]
   ],
-
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
-
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     meta: {
