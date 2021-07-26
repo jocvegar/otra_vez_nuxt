@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     async readFromFirestore() {
-      console.log("I was called");
       const testRef = this.$fire.firestore
         .collection("test")
         .doc("GtDccyodR6KKKEcLBdna");

@@ -13,13 +13,7 @@ export default {
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    script: [
-      {
-        src: "https://www.googletagmanager.com/gtag/js?id=UA-number-3",
-        async: true
-      }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -78,6 +72,9 @@ export default {
   axios: {},
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    icon: {
+      fileName: "icon.png"
+    },
     meta: {
       name: "Otra Vez",
       description: "Fashion friendly",

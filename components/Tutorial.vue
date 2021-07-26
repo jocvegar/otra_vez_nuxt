@@ -54,9 +54,14 @@
         <h2 class="text-2xl leading-7 font-semibold">
           Welcome to your Nuxt Application
         </h2>
-        <p class="mt-3 text-gray-600">
-          {{ message }}
-        </p>
+        <div v-if="message">
+          <p class="mt-3 text-gray-600">
+            {{ message }}
+          </p>
+        </div>
+        <div v-else>
+          <p>Loading...</p>
+        </div>
       </div>
     </div>
   </div>
