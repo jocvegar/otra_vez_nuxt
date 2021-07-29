@@ -54,6 +54,10 @@
         <h2 class="text-2xl leading-7 font-semibold">
           Welcome to your Nuxt Application
         </h2>
+        <br />
+        <div>
+          <p class="text-primary">{{ message2 }}</p>
+        </div>
         <div v-if="message">
           <p class="mt-3 text-gray-600">
             {{ message }}
@@ -69,6 +73,6 @@
 
 <script>
 export default {
-  props: ["message"]
+  props: ["message", "message2"]
 };
 </script>

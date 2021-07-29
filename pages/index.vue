@@ -3,9 +3,7 @@
     <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
       {{ alertMessage }}
     </b-alert>
-    {{ alertMessage }}
-    <Tutorial :message="message" />
-
+    <Tutorial :message="message" :message2="message2" />
     <b-button variant="danger" @click="getMessagingToken">Button</b-button>
   </b-container>
 </template>
@@ -15,21 +13,37 @@ export default {
   data() {
     return {
       message: "",
-      showDismissibleAlert: false,
-      alertMessage: "test"
+      message2: "",
+      alertMessage: "HOLA!",
+      showDismissibleAlert: false
     };
   },
+  async asyncData({ $fire }) {
+    let message2 = "";
 
+    const testRef = await $fire.firestore
+      .collection("test")
+      .doc("BYE1NpVkd5bvGscrqoNs");
+
+    try {
+      const messageDoc = await testRef.get();
+      message2 = messageDoc.data().message;
+    } catch (error) {
+      console.log(`error`, error);
+    }
+
+    return { message2 };
+  },
   mounted() {
-    this.readFromFirestore();
-
+    this.getMessage();
     this.listenTokenRefresh();
+
     this.$fire.messaging.onMessage(payload => {
       console.info("Message received: ", payload);
     });
   },
   methods: {
-    async readFromFirestore() {
+    async getMessage() {
       const testRef = this.$fire.firestore
         .collection("test")
         .doc("GtDccyodR6KKKEcLBdna");
@@ -105,16 +119,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-    },
-    async turnOnNotification() {
-      try {
-        await this.$fire.messaging.requestPermission();
-        const token = await this.$fire.messaging.getToken();
-        // send to server
-      } catch (err) {
-        if (err.code === "messaging/token-unsubscribe-failed")
-          turnOnNotification();
-      }
     }
   }
 };
