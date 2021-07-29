@@ -4,19 +4,36 @@
       {{ alertMessage }}
     </b-alert>
     <Tutorial :message="message" :message2="message2" />
+    <br />
+    <p v-if="$fetchState.pending">Fetching mountains...</p>
+    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <div v-else>
+      <Mountain :mountains="mountains" />
+    </div>
     <b-button variant="danger" @click="getMessagingToken">Button</b-button>
   </b-container>
 </template>
 
 <script>
+import Mountain from "~/components/Mountain.vue";
 export default {
+  components: { Mountain },
   data() {
     return {
       message: "",
       message2: "",
       alertMessage: "HOLA!",
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      mountains: []
     };
+  },
+  async fetch() {
+    this.mountains = await fetch("https://api.nuxtjs.dev/mountains")
+      .then(res => res.json())
+      .catch(err => {
+        this.showDismissibleAlert = true;
+        this.alertMessage = "no sirve esta mierda";
+      });
   },
   async asyncData({ $fire }) {
     let message2 = "";
